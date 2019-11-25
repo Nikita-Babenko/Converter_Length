@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://wdgt.yandex.ru/ns/"  >
+<head>
+    <meta name="title" content="Конвертор величин измерения расстояний" />
+    <meta name="description"
+          content="Конвертор величин измерения расстояний позволяет переводить различные меры длины друг в друга."/>
+    <widget:preferences>
+        <preference name="mm" type="boolean" defaultValue="true" label="Миллиметры" />
+        <preference name="cm" type="boolean" defaultValue="true" label="Сантиметры" />
+        <preference name="m" type="boolean" defaultValue="true" label="Метры" />
+        <preference name="foot" type="boolean" defaultValue="true" label="Футы" />
+        <preference name="inch" type="boolean" defaultValue="true" label="Дюймы" />
+    </widget:preferences>
+    <style type="text/css">
+        body {
+            background-color:greenyellow;
+            text-align:center;
+        }
+        #toVal{
+            color:blue;
+        }
+    </style>
+    <script src="http://img.yandex.net/webwidgets/1/WidgetApi.js">
+    </script>
+    <script >
+        <!--
+        var metrics = {
+            "mm" : 1,
+            "cm" : 10,
+            "m" : 1000,
+            "km" : 1000000,
+            "inch" : 25.4,
+            "foot" : 304.8,
+            "yard" : 914.4,
+            "chain"  : 20116.8,
+            "furlong" : 201168,
+            "mile" : 1e+6
+        };
+        function convert(){
+            var val = document.getElementById("fromVal").value;
+            if(isNaN(val)){
+                return;
+            }
+            document.getElementById("toVal").value =
+                document.getElementById("fromVal").value *
+                metrics[document.getElementById("fromSystem").value] /
+                metrics[document.getElementById("toSystem").value];
+        }
+        widget.onload = function(){
+            widget.adjustIFrameHeight();
+            var metricNames = ["m", "cm", "mm", "foot", "inch","foot","yard","chain","furlong","mile"];
+            var metrics = "";
+            for(var i = 0; i < metricNames.length; ++i){
+                if(widget.getValue(metricNames[i]) == "true"){
+                    metrics += ("," + metricNames[i] + ",");
+                }
+            }
+            delOtherValuesFromList(document.getElementById("fromSystem"), metrics);
+            delOtherValuesFromList(document.getElementById("toSystem"), metrics);
+        }
+        function delOtherValuesFromList(list, values){
+            for(var i = 0; i < list.options.length;){
+                values.indexOf("," + list.options[i].value + ",") == -1 ? list.remove(i) : ++i;
+            }
+        }
+        var interval = null;
+        function watchChanges(){
+            interval == null ? setInterval("convert()", 500) : clearInterval(interval);
+        }
+        //-->
+    </script>
+</head>
+<body style="margin:0">
+
+<table class="wikitable" style="width: 400px;" border="1px;">
+    <tbody>
+    <tr>
+        <th colspan="4" style="width: 359px;">Таблица величин</th>
+    </tr>
+    <tr>
+        <th style="width: 67px;">Величина</th>
+        <th style="width: 102px;">Сокращение</th>
+        <th style="width: 80px;">Определение</th>
+        <th style="width: 92px;">SI Эквивалент в мм</th>
+    </tr>
+    <tr>
+        <td style="width: 67px;"><a>inch</a></td>
+        <td align="center" style="width: 102px;">in&nbsp;<sup id="cite_ref-2qm_79-0" class="reference"></sup>
+        </td>
+        <td style="width: 80px;"></td>
+        <td align="center" style="width: 92px;">25.4&nbsp;mm</td>
+    </tr>
+    <tr>
+        <td style="width: 67px;"><a>foot</a></td>
+        <td align="center" style="width: 102px;">ft&nbsp;<sup id="cite_ref-1qm_81-0" class="reference"></sup>
+        </td>
+        <td align="center" style="width: 80px;">12 inches</td>
+        <td align="center" style="width: 92px;">304.8&nbsp;mm</td>
+    </tr>
+    <tr>
+        <td style="width: 67px;"><a>yard</a></td>
+        <td align="center" style="width: 102px;">yd</td>
+        <td align="center" style="width: 80px;">3 feet</td>
+        <td align="center" style="width: 92px;">0.9144&nbsp;m</td>
+    </tr>
+    <tr>
+        <td style="width: 67px;"><a>chain</a></td>
+        <td align="center" style="width: 102px;"></td>
+        <td align="center" style="width: 80px;">22&nbsp;yards</td>
+        <td align="center" style="width: 92px;">20.117&nbsp;m</td>
+    </tr>
+    <tr>
+        <td style="width: 67px;"><a>furlong</a></td>
+        <td align="center" style="width: 102px;">fur</td>
+        <td align="center" style="width: 80px;">220 yards</td>
+        <td align="center" style="width: 92px;">201.17&nbsp;m</td>
+    </tr>
+    <tr>
+        <td style="width: 67px;"><span><a>mile</a>
+        </span><sup id="cite_ref-82" class="reference"></sup>
+        </td>
+        <td align="center" style="width: 102px;"></td>
+        <td align="center" style="width: 80px;">1760 yards</td>
+        <td align="center" style="width: 92px;">1609.3&nbsp;m</td>
+    </tr>
+    </tbody>
+</table>
+<table border="1px" >
+    <tr>
+        <td colspan="2">
+        Введите расстояние
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="text" id="fromVal" style="width:150px"
+                   onfocus="watchChanges()" onblur="watchChanges()"/>
+        </td>
+        <td>
+            <select id="fromSystem" onchange="convert()">
+                <option value="inch">дюймов</option>
+                <option value="foot">футов</option>
+                <option value="yard">ярдов</option>
+                <option value="chain">чейнов</option>
+                <option value="furlong">фурлонгов</option>
+                <option value="mile">миль</option>
+
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">Получаем</td>
+    </tr>
+    <tr>
+        <td>
+            <input type="text" style="width:150px" disabled="true" id="toVal"/>
+        </td>
+        <td>
+            <select id ="toSystem" onchange="convert()">
+                <option value="mm">миллиметров</option>
+                <option value="cm">сантиметров</option>
+                <option selected="selected" value="m">метров</option>
+                <option  value="km">километры</option>
+
+            </select>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
